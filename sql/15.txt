@@ -1,0 +1,104 @@
+coalesce(null, null, '3', 5)
+
+INSERT INTO students (first_name, last_name, age, grade, course,  dob, blood_group, country) VALUES
+('John', 'Smith', 20, 'A', 'Computer Science',  '2004-03-15', 'O+', 'USA')
+
+
+-- null and coalesce
+select * from students 
+  where email is not null        ---email is null
+
+select coalesce(null, null, '3', 5) --3
+
+select first_name, age, coalesce(email, 'Email Not Provide') from students 
+
+-- limit , offset
+select * from students limit 5
+
+select * from students limit 5 offset 5 * 0
+select * from students limit 5 offset 5 * 1
+select * from students limit 5 offset 5 * 2
+select * from students limit 5 offset 5 * 3
+
+-- update in postgre
+select * from students
+
+update students
+  set first_name = 'John',  last_name = 'Wick', age=365
+  where student_id = 1
+
+update students
+  set grade = 'F'
+  where student_id in (1, 2)
+
+-- delete in postgre
+delete from students 
+  where age > 20 and grade = 'C'
+
+-- grouup by
+select grade, count(*) from students
+  group by grade
+
+-- what is the diffarence between having and where
+-- where filter from all the row and having filter from group by
+
+
+-- grouup by having
+select country, avg(age) from students
+  group by country
+  having avg(age) >= 21
+
+create table users(
+  id serial primary key,
+  username varchar(50) not null
+)
+
+create table posts(
+  id serial primary key,
+  title varchar(250) not null,
+  user_id int references users(id)
+)
+
+INSERT INTO posts (title) VALUES
+('Welcome to my blog')
+
+CREATE TABLE departments (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE employeesData (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50) NOT NULL,
+    dept_id INT
+);
+
+
+
+-- join
+select * from posts
+  join users on posts.user_id = users.id
+
+-- inner join
+select * from posts as p
+  inner users as u on p.user_id = u.id
+
+-- left join
+select * from posts as p
+  left outer join users as u on p.user_id = u.id
+
+-- right join
+select * from posts as p
+  right outer join users as u on p.user_id = u.id
+
+-- full join
+select * from posts as p
+  right outer join users as u on p.user_id = u.id
+
+-- cross join
+select * from employeesdata
+  cross join departments
+
+-- natural join
+select * from employeesdata
+  natural join departments

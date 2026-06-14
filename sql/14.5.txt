@@ -121,4 +121,3 @@ select sum(total_amount)as "total_revenue",
   min(total_amount)as "minimum_order",
   count(*) "total_orders_in_june" from orders
   where order_date between '2023-06-01' and '2023-06-30'
-
