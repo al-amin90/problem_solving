@@ -1,0 +1,62 @@
+-- 1.
+select coalesce(phone, 'Not Provided') from students
+
+-- 2.
+select * from courses
+  order by price desc limit 5
+
+-- 3.
+select * from courses
+  order by price desc limit 3 offset 3 * 1
+
+-- 4. 
+update courses 
+  set price = price + price * .10
+  where category = 'Programming'
+
+-- 5. 
+delete from enrollments
+  where progress_percentage is null
+
+-- 6.
+select category, sum(paid_amount) from enrollments
+  join courses using(course_id)
+  group by category
+
+-- 7.
+select category, avg(price) as avg_price from courses
+  group by category
+  having avg(price) > 60
+
+-- 8.
+select course_title, count(*) from enrollments
+  join courses using(course_id)
+  group by course_title
+
+-- 10.
+select concat(first_name, ' ', last_name),course_title, paid_amount from enrollments
+ inner join courses using(course_id)
+ inner join students using(student_id)
+
+-- 11.
+select * from students
+  left join enrollments using(student_id)
+
+-- 12.
+select * from enrollments
+  inner join students using(student_id)
+  right join courses using(course_id)
+
+-- 13.
+select * from enrollments
+  inner join students using(student_id)
+  right join courses using(course_id)
+
+-- 14.
+select extract(year from enrollment_date) as en_year, count(*) from enrollments
+  group by en_year
+
+-- 15.
+select course_title, avg(progress_percentage) from enrollments
+  inner join courses using(course_id)
+  group by course_title
